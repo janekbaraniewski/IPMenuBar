@@ -10,6 +10,7 @@ build/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata/
+IPMenuBar.xcodeproj/xcuserdata/
 
 # Swift Package Manager
 Package.pins

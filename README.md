@@ -16,4 +16,4 @@ In `Local IP` mode, `IPMenuBar` retrieves the local IP address of the user's dev
 
 ## Install
 
-Download .app file from latest release. 
+Download IPMenuBar.zip file containing IPMenuBar.app from [latest release](https://github.com/janekbaraniewski/IPMenuBar/releases/). 

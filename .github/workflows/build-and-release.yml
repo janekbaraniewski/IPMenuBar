@@ -93,10 +93,19 @@ jobs:
         # Get the SHA256 checksum of the release asset
         SHA256=$(curl -Ls $RELEASE_URL | shasum -a 256 | awk '{ print $1 }')
 
+        echo "Version: $APP_VERSION"
+        echo "URL: $RELEASE_URL"
+        echo "SHA256: $SHA256"
+
+        cat Casks/ipmenubar.rb
+
         # Update the Cask file
         sed -i '' "s/version '.*'/version '$APP_VERSION'/" Casks/ipmenubar.rb
         sed -i '' "s|url '.*'|url '$RELEASE_URL'|" Casks/ipmenubar.rb
         sed -i '' "s/sha256 '.*'/sha256 '$SHA256'/" Casks/ipmenubar.rb
+
+        echo "After sed:"
+        cat Casks/ipmenubar.rb
 
         # Commit and push the changes
         git add Casks/ipmenubar.rb

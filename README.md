@@ -4,11 +4,13 @@
 
 `IPMenuBar` is a simple macOS menu bar application that displays the user's IP address. It provides two modes for retrieving the IP address: `Public IP` and `Local IP`.
 
+![Running example of IPMenuBar](IPMenuBar.png)
+
 ## Modes
 
 ### Public IP
 
-In `Public IP` mode, `IPMenuBar` fetches the public IP address of the user's network connection using the [`ipify`](https://www.ipify.org) API. 
+In `Public IP` mode, `IPMenuBar` fetches the public IP address of the user's network connection using the [`ipify`](https://www.ipify.org) API.
 
 ### Local IP
 
@@ -16,4 +18,4 @@ In `Local IP` mode, `IPMenuBar` retrieves the local IP address of the user's dev
 
 ## Install
 
-Download IPMenuBar.zip file containing IPMenuBar.app from [latest release](https://github.com/janekbaraniewski/IPMenuBar/releases/). 
+Download IPMenuBar.zip file containing IPMenuBar.app from [latest release](https://github.com/janekbaraniewski/IPMenuBar/releases/).

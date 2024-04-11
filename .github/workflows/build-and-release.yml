@@ -1,0 +1,58 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # Fetch all history so we can get all commits between tags
+
+    - name: Set up Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: 'latest'
+
+    - name: Build App
+      run: xcodebuild -project IPMenuBar.xcodeproj -scheme "IPMenuBar - Release" -configuration Release clean build
+
+    - name: Package App
+      run: |
+        tar -czvf IPMenuBar-${GITHUB_REF_NAME}.tar.gz -C ./build/Release IPMenuBar.app
+
+    - name: Get Previous Tag
+      id: prev_tag
+      uses: WyriHaximus/github-action-get-previous-tag@v1
+
+    - name: Get Commit Messages
+      id: get_commits
+      run: |
+        commits=$(git log ${{ steps.prev_tag.outputs.tag }}..HEAD --oneline)
+        echo "::set-output name=commits::${commits}"
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref_name }}
+        draft: false
+        prerelease: false
+        body: ${{ steps.get_commits.outputs.commits }}
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./IPMenuBar-${GITHUB_REF_NAME}.tar.gz
+        asset_name: IPMenuBar-${GITHUB_REF_NAME}.tar.gz
+        asset_content_type: application/gzip

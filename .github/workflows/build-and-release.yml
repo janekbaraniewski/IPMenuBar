@@ -100,9 +100,9 @@ jobs:
         cat Casks/ipmenubar.rb
 
         # Update the Cask file
-        sed -i '' "s/version '.*'/version '$APP_VERSION'/" Casks/ipmenubar.rb
-        sed -i '' "s|url '.*'|url '$RELEASE_URL'|" Casks/ipmenubar.rb
-        sed -i '' "s/sha256 '.*'/sha256 '$SHA256'/" Casks/ipmenubar.rb
+        sed -i '' "s|version ['\"].*['\"]|version \"$APP_VERSION\"|" Casks/ipmenubar.rb
+        sed -i '' "s|url ['\"].*['\"]|url \"$RELEASE_URL\"|" Casks/ipmenubar.rb
+        sed -i '' "s|sha256 ['\"].*['\"]|sha256 \"$SHA256\"|" Casks/ipmenubar.rb
 
         echo "After sed:"
         cat Casks/ipmenubar.rb

@@ -23,7 +23,9 @@ jobs:
 
     - name: Package App
       run: |
-        tar -czvf IPMenuBar-${GITHUB_REF_NAME}.tar.gz -C ./build/Build/Products/Release IPMenuBar.app
+        FILE_NAME="IPMenuBar-${GITHUB_REF_NAME}.tar.gz"
+        echo "FILE_NAME=$FILE_NAME" >> $GITHUB_ENV
+        tar -czvf $FILE_NAME -C ./build/Build/Products/Release IPMenuBar.app
 
     - name: Get Previous Tag
       id: prev_tag
@@ -53,6 +55,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./IPMenuBar-${GITHUB_REF_NAME}.tar.gz
-        asset_name: IPMenuBar-${GITHUB_REF_NAME}.tar.gz
+        asset_path: ./${{ env.FILE_NAME }}
+        asset_name: ${{ env.FILE_NAME }}
         asset_content_type: application/gzip

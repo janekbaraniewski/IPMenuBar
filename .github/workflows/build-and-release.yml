@@ -19,11 +19,11 @@ jobs:
         xcode-version: 'latest'
 
     - name: Build App
-      run: xcodebuild -project IPMenuBar.xcodeproj -scheme "IPMenuBar - Release" -configuration Release clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+      run: xcodebuild -project IPMenuBar.xcodeproj -scheme "IPMenuBar - Release" -configuration Release clean build -derivedDataPath './build' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
     - name: Package App
       run: |
-        tar -czvf IPMenuBar-${GITHUB_REF_NAME}.tar.gz -C ./build/Release IPMenuBar.app
+        tar -czvf IPMenuBar-${GITHUB_REF_NAME}.tar.gz -C ./build/Build/Products/Release IPMenuBar.app
 
     - name: Get Previous Tag
       id: prev_tag

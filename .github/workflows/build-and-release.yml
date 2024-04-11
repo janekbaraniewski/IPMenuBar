@@ -23,10 +23,18 @@ jobs:
       env:
         GITHUB_REF_NAME: ${{ github.ref_name }}
 
-    - name: Set Version Number
+    # - name: Set Version Number
+    #   run: |
+    #     agvtool new-marketing-version ${{ env.APP_VERSION }}
+    #     agvtool new-version -all ${{ github.run_number }}
+
+    - name: Update Version Numbers in .xcconfig
       run: |
-        agvtool new-marketing-version ${{ env.APP_VERSION }}
-        agvtool new-version -all ${{ github.run_number }}
+        echo "MARKETING_VERSION = $APP_VERSION" > Release.xcconfig
+        echo "CURRENT_PROJECT_VERSION = $GITHUB_RUN_NUMBER" >> Release.xcconfig
+      env:
+        APP_VERSION: ${{ env.APP_VERSION }}
+        GITHUB_RUN_NUMBER: ${{ github.run_number }}
 
     - name: Build App
       run: xcodebuild -project IPMenuBar.xcodeproj -scheme "IPMenuBar - Release" -configuration Release clean build -derivedDataPath './build' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
